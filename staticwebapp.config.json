@@ -1,0 +1,20 @@
+﻿{
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/assets/*", "*.{css,js,png,jpg,jpeg,gif,ico,svg,woff2,json}"]
+  },
+  "mimeTypes": {
+    ".json": "application/json",
+    ".webp": "image/webp"
+  },
+  "globalHeaders": {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "SAMEORIGIN",
+    "Cache-Control": "public, max-age=31536000, immutable"
+  },
+  "responseOverrides": {
+    "404": {
+      "rewrite": "/index.html"
+    }
+  }
+}

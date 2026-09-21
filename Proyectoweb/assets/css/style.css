@@ -1,4 +1,4 @@
-
+﻿
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
@@ -343,7 +343,7 @@ h6 {
 #hero {
   width: 100%;
   height: 75vh;
-  background: url("../img/Content/central.png") top left;
+  background: url("../img/Content/central.jpg") top left;
   background-size: cover;
   position: relative;
 }
@@ -573,4 +573,252 @@ section {
     text-align: center;
     padding: 2px 0;
   }
+}
+
+/*--------------------------------------------------------------
+# Botón Circular de Usuario (Login / Avatar)
+--------------------------------------------------------------*/
+.user-action-area {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.user-circle-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #08961b;
+  color: #08961b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(8, 150, 27, 0.2);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  font-size: 1.25rem;
+  padding: 0;
+}
+
+.user-circle-btn:hover {
+  background: #08961b;
+  color: #ffffff;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 14px rgba(8, 150, 27, 0.35);
+}
+
+.user-circle-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.user-status-dot {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background-color: #adb5bd;
+  border: 2px solid #ffffff;
+  transition: background-color 0.3s ease;
+}
+
+.user-status-dot.active {
+  background-color: #03d406;
+  box-shadow: 0 0 0 2px rgba(3, 212, 6, 0.25);
+}
+
+/* Botón secundario en Hero */
+.btn-outline-custom {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 10px 24px;
+  border-radius: 4px;
+  transition: 0.4s;
+  color: #08961b;
+  background: transparent;
+  border: 2px solid #08961b;
+}
+
+.btn-outline-custom:hover {
+  background: #08961b;
+  color: #ffffff;
+}
+
+/*--------------------------------------------------------------
+# Modal de Login Temático
+--------------------------------------------------------------*/
+.auth-modal-content {
+  border-radius: 16px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.auth-icon-badge {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #e8f8ec;
+  color: #08961b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+}
+
+.quick-accounts-box {
+  background: #f8faf9;
+  border: 1px dashed #cdebd4;
+}
+
+.extra-small {
+  font-size: 0.76rem;
+}
+
+.quick-fill-btn {
+  font-size: 0.8rem;
+  transition: all 0.2s ease;
+}
+
+.quick-fill-btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-auth-submit {
+  background-color: #08961b;
+  border-color: #08961b;
+  transition: all 0.3s ease;
+}
+
+.btn-auth-submit:hover {
+  background-color: #067214;
+  border-color: #067214;
+  box-shadow: 0 4px 10px rgba(8, 150, 27, 0.3);
+}
+
+.form-control:focus {
+  border-color: #08961b;
+  box-shadow: 0 0 0 0.25rem rgba(8, 150, 27, 0.2);
+}
+
+/*--------------------------------------------------------------
+# Panel de Control Artesanal (Dashboard)
+--------------------------------------------------------------*/
+.user-dashboard-section {
+  background: #f4f8f5;
+  padding: 45px 0;
+  border-top: 1px solid #e1eee4;
+  border-bottom: 1px solid #e1eee4;
+}
+
+.dashboard-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(8, 150, 27, 0.12);
+}
+
+.dashboard-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #08961b, #03d406);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(8, 150, 27, 0.3);
+}
+
+.metric-card {
+  background: #fcfdfc;
+  border: 1px solid #ebf4ee;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.04);
+}
+
+.metric-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.bg-success-light { background-color: #e8f8ec; }
+.bg-warning-light { background-color: #fff9e6; }
+.bg-info-light { background-color: #eaf6ff; }
+.bg-danger-light { background-color: #fdf0f0; }
+/* Botones de acción en tarjetas de productos */
+.products .member .member-info {
+  padding: 18px 15px;
+}
+
+.btn-ver-detalle {
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-ver-detalle:hover {
+  background-color: #08961b;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(8, 150, 27, 0.25);
+}
+
+/* Modales y vistas del panel */
+.craft-progress-bar {
+  height: 8px;
+  border-radius: 4px;
+}
+
+.btn-action-pill {
+  font-size: 0.78rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.status-badge-filter.active {
+  background-color: #08961b !important;
+  color: #ffffff !important;
+  border-color: #08961b !important;
+}
+
+/*--------------------------------------------------------------
+# Contact Section & Cards
+--------------------------------------------------------------*/
+.contact .contact-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.contact .contact-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(8, 150, 27, 0.12) !important;
+}
+
+.contact .contact-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #e8f8ec;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
 }
