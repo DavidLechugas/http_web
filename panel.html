@@ -1,0 +1,593 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Mi Panel Artesanal - Artesanías de Nuestra Tierra</title>
+  <meta content="Panel de administración y gestión de producción para artesanos de Boyacá y Cundinamarca." name="description">
+
+  <!-- Favicons -->
+  <link href="assets/img/Content/favicon.png" rel="icon">
+  <link href="assets/img/Content/favicon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <style>
+    /* Estilos específicos para la vista dedicada del panel */
+    body.panel-page {
+      background-color: #f4f8f5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-navbar {
+      background: #ffffff;
+      border-bottom: 1px solid #e1eee4;
+      padding: 12px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    .panel-container {
+      flex: 1;
+      padding: 30px 0 50px 0;
+    }
+
+    .table-hover tbody tr {
+      transition: background-color 0.15s ease;
+    }
+
+    .btn-action-pill {
+      font-size: 0.78rem;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    .status-badge-filter.active {
+      background-color: #08961b !important;
+      color: #ffffff !important;
+      border-color: #08961b !important;
+    }
+
+    .craft-progress-bar {
+      height: 8px;
+      border-radius: 4px;
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #printSection, #printSection * {
+        visibility: visible;
+      }
+      #printSection {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body class="panel-page">
+
+  <!-- ======= Navbar Superior del Panel ======= -->
+  <header class="panel-navbar sticky-top">
+    <div class="container d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center gap-2">
+        <a href="index.html" class="logo me-1">
+          <img src="assets/img/Content/logo.png" alt="Logo Artesanías" height="38">
+        </a>
+        <div>
+          <h1 class="h5 mb-0 fw-bold"><a href="index.html" class="text-decoration-none text-dark">Artesanías de Nuestra Tierra</a></h1>
+          <small class="text-muted"><i class="bi bi-speedometer2 text-success me-1"></i> Panel de Gestión &amp; Taller Artesanal</small>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center gap-2">
+        <a href="index.html" class="btn btn-outline-success btn-sm d-flex align-items-center gap-1">
+          <i class="bi bi-shop"></i> <span class="d-none d-sm-inline">Ir a la Tienda</span>
+        </a>
+        <button id="panelLogoutBtn" class="btn btn-outline-danger btn-sm d-flex align-items-center gap-1">
+          <i class="bi bi-box-arrow-right"></i> <span class="d-none d-sm-inline">Cerrar Sesión</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======= Contenido Principal del Panel ======= -->
+  <main class="panel-container">
+    <div class="container">
+
+      <!-- Breadcrumb y Aviso de Bienvenida -->
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb small mb-0">
+            <li class="breadcrumb-item"><a href="index.html" class="text-success text-decoration-none">Inicio</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Mi Panel</li>
+          </ol>
+        </nav>
+        <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-1">
+          <i class="bi bi-shield-check me-1"></i> Servidor Seguro Sincronizado
+        </span>
+      </div>
+
+      <!-- Tarjeta Principal del Usuario -->
+      <div class="dashboard-card mb-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-center pb-3 mb-4 border-bottom">
+          <div class="d-flex align-items-center gap-3 mb-2 mb-md-0">
+            <div class="dashboard-avatar" id="dashAvatarInitial">A</div>
+            <div>
+              <span class="badge rounded-pill bg-success-subtle text-success border border-success-subtle mb-1" id="dashUserRole">Administrador General</span>
+              <h3 class="mb-0 fw-bold" id="dashUserName">Camila Restrepo</h3>
+              <small class="text-muted" id="dashUserEmail">admin@artesanias.com</small>
+            </div>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <span class="badge bg-light text-dark d-flex align-items-center px-3 py-2 border shadow-sm">
+              <i class="bi bi-circle-fill text-success me-2" style="font-size: 8px;"></i> Sesión Activa
+            </span>
+            <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#modalNuevaArtesania">
+              <i class="bi bi-plus-circle me-1"></i> Nueva Pieza
+            </button>
+          </div>
+        </div>
+
+        <!-- Fila de Métricas Clave -->
+        <div class="row g-3 mb-4">
+          <div class="col-sm-6 col-lg-3">
+            <div class="metric-card p-3 rounded-3 h-100">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="metric-title text-muted small">Catálogo Activo</div>
+                  <div class="metric-value fs-3 fw-bold text-dark" id="statProducts">4</div>
+                </div>
+                <div class="metric-icon bg-success-light text-success">
+                  <i class="bi bi-basket3-fill"></i>
+                </div>
+              </div>
+              <div class="metric-foot small text-success mt-2">
+                <i class="bi bi-arrow-up-short"></i> 100% disponible
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-lg-3">
+            <div class="metric-card p-3 rounded-3 h-100">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="metric-title text-muted small">Pedidos Locales</div>
+                  <div class="metric-value fs-3 fw-bold text-dark" id="statOrders">24</div>
+                </div>
+                <div class="metric-icon bg-warning-light text-warning">
+                  <i class="bi bi-bag-check-fill"></i>
+                </div>
+              </div>
+              <div class="metric-foot small text-muted mt-2">
+                Boyacá &amp; Cundinamarca
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-lg-3">
+            <div class="metric-card p-3 rounded-3 h-100">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="metric-title text-muted small">Visitas al Taller</div>
+                  <div class="metric-value fs-3 fw-bold text-dark">452</div>
+                </div>
+                <div class="metric-icon bg-info-light text-info">
+                  <i class="bi bi-people-fill"></i>
+                </div>
+              </div>
+              <div class="metric-foot small text-success mt-2">
+                <i class="bi bi-graph-up-arrow"></i> +24% este mes
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-lg-3">
+            <div class="metric-card p-3 rounded-3 h-100">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="metric-title text-muted small">Valoración</div>
+                  <div class="metric-value fs-3 fw-bold text-dark">4.9/5</div>
+                </div>
+                <div class="metric-icon bg-danger-light text-danger">
+                  <i class="bi bi-star-fill"></i>
+                </div>
+              </div>
+              <div class="metric-foot small text-muted mt-2">
+                Calidad artesanal certificada
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cuerpo de Producción y Operaciones -->
+        <div class="row g-4">
+          <!-- Columna Izquierda: Tabla y Filtros -->
+          <div class="col-lg-8">
+            <div class="p-3 bg-white rounded-3 border">
+              <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                <h5 class="fw-bold mb-0 d-flex align-items-center gap-2">
+                  <i class="bi bi-clock-history text-success"></i> Estado Reciente de Producción
+                </h5>
+                <!-- Filtros rápidos por estado -->
+                <div class="btn-group btn-group-sm" role="group" aria-label="Filtros de estado">
+                  <button type="button" class="btn btn-outline-secondary status-badge-filter active" data-filter="todos">Todos</button>
+                  <button type="button" class="btn btn-outline-secondary status-badge-filter" data-filter="exhibicion">Exhibición</button>
+                  <button type="button" class="btn btn-outline-secondary status-badge-filter" data-filter="horneado">En Proceso</button>
+                  <button type="button" class="btn btn-outline-secondary status-badge-filter" data-filter="almacen">En Almacén</button>
+                </div>
+              </div>
+
+              <!-- Buscador dentro de la tabla -->
+              <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text bg-light border-end-0"><i class="bi bi-search text-muted"></i></span>
+                <input type="text" id="buscarPiezaInput" class="form-control border-start-0" placeholder="Buscar por nombre, origen o técnica...">
+              </div>
+
+              <!-- Tabla de Artesanías -->
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 small">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Pieza</th>
+                      <th>Origen / Región</th>
+                      <th>Estado de Producción</th>
+                      <th class="text-end">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody id="panelTableBody">
+                    <!-- Contenido dinámico inyectado por JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Columna Derecha: Operaciones Rápidas e Info del Taller -->
+          <div class="col-lg-4">
+            <div class="d-flex flex-column gap-3 h-100">
+              <!-- Caja de Operaciones Rápidas -->
+              <div class="p-3 bg-white rounded-3 border">
+                <h5 class="fw-bold mb-3 d-flex align-items-center gap-2">
+                  <i class="bi bi-lightning-charge-fill text-warning"></i> Operaciones Rápidas
+                </h5>
+                <div class="d-grid gap-2">
+                  <button class="btn btn-outline-success text-start d-flex align-items-center gap-2 py-2" data-bs-toggle="modal" data-bs-target="#modalNuevaArtesania">
+                    <i class="bi bi-plus-circle fs-5"></i>
+                    <div>
+                      <div class="fw-semibold">Registrar Nueva Artesanía</div>
+                      <small class="text-muted">Añadir pieza al catálogo local</small>
+                    </div>
+                  </button>
+
+                  <button class="btn btn-outline-primary text-start d-flex align-items-center gap-2 py-2" data-bs-toggle="modal" data-bs-target="#modalReporteTaller">
+                    <i class="bi bi-file-earmark-bar-graph fs-5"></i>
+                    <div>
+                      <div class="fw-semibold">Descargar Reporte de Taller</div>
+                      <small class="text-muted">Exportar inventario y métricas en CSV/PDF</small>
+                    </div>
+                  </button>
+
+                  <a href="index.html#productos" class="btn btn-outline-secondary text-start d-flex align-items-center gap-2 py-2">
+                    <i class="bi bi-eye fs-5"></i>
+                    <div>
+                      <div class="fw-semibold">Ver Catálogo Público</div>
+                      <small class="text-muted">Visualizar vista de clientes</small>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Caja de Información de Territorio & Talleres -->
+              <div class="p-3 bg-white rounded-3 border flex-fill">
+                <h6 class="fw-bold mb-2 text-muted text-uppercase small">
+                  <i class="bi bi-pin-map text-success me-1"></i> Red de Artesanos Activa
+                </h6>
+                <div class="small text-muted mb-3">
+                  Talleres vinculados actualmente:
+                </div>
+                <ul class="list-unstyled small mb-3">
+                  <li class="mb-2 d-flex align-items-center justify-content-between">
+                    <span><i class="bi bi-check-circle-fill text-success me-1"></i> Ráquira (Alfarería)</span>
+                    <span class="badge bg-light text-dark border">Boyacá</span>
+                  </li>
+                  <li class="mb-2 d-flex align-items-center justify-content-between">
+                    <span><i class="bi bi-check-circle-fill text-success me-1"></i> Nobsa (Tejidos Lana)</span>
+                    <span class="badge bg-light text-dark border">Boyacá</span>
+                  </li>
+                  <li class="mb-2 d-flex align-items-center justify-content-between">
+                    <span><i class="bi bi-check-circle-fill text-success me-1"></i> Guatavita (Orfebrería)</span>
+                    <span class="badge bg-light text-dark border">Cundinamarca</span>
+                  </li>
+                  <li class="d-flex align-items-center justify-content-between">
+                    <span><i class="bi bi-check-circle-fill text-success me-1"></i> Valle de Tenza (Fique)</span>
+                    <span class="badge bg-light text-dark border">Boyacá</span>
+                  </li>
+                </ul>
+                <div class="p-2 bg-light rounded text-center small text-muted">
+                  <i class="bi bi-cloud-check text-success me-1"></i> Servidor Cloud &bull; Datos sincronizados
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ======= Footer del Panel ======= -->
+  <footer class="py-3 bg-white border-top mt-auto">
+    <div class="container text-center small text-muted">
+      &copy; 2024 <strong>Artesanías de Nuestra Tierra</strong> &bull; Boyacá &amp; Cundinamarca. Todos los derechos reservados.
+    </div>
+  </footer>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 1: REGISTRAR NUEVA ARTESANÍA                             -->
+  <!-- ============================================================== -->
+  <div class="modal fade" id="modalNuevaArtesania" tabindex="-1" aria-labelledby="modalNuevaArtesaniaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content shadow border-0 rounded-4">
+        <div class="modal-header border-0 pb-0">
+          <div class="d-flex align-items-center gap-2">
+            <div class="auth-icon-badge" style="width: 42px; height: 42px; font-size: 20px;">
+              <i class="bi bi-plus-circle-fill"></i>
+            </div>
+            <div>
+              <h5 class="modal-title fw-bold mb-0" id="modalNuevaArtesaniaLabel">Registrar Nueva Artesanía</h5>
+              <small class="text-muted">Añadir pieza a la cadena de producción y catálogo</small>
+            </div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <form id="formNuevaArtesania">
+          <div class="modal-body px-4 py-3">
+            <div class="row g-3">
+              <div class="col-md-7">
+                <label for="craftName" class="form-label small fw-semibold">Nombre de la Pieza</label>
+                <input type="text" class="form-control" id="craftName" placeholder="Ej. Ruana de Nobsa en Lana Virgen" required>
+              </div>
+
+              <div class="col-md-5">
+                <label for="craftRegion" class="form-label small fw-semibold">Región / Municipio</label>
+                <select class="form-select" id="craftRegion" required>
+                  <option value="Nobsa, Boyacá">Nobsa, Boyacá</option>
+                  <option value="Ráquira, Boyacá">Ráquira, Boyacá</option>
+                  <option value="Valle de Tenza, Boyacá">Valle de Tenza, Boyacá</option>
+                  <option value="Guatavita, Cundinamarca">Guatavita, Cundinamarca</option>
+                  <option value="Chía, Cundinamarca">Chía, Cundinamarca</option>
+                  <option value="Boyacá">Boyacá General</option>
+                  <option value="Cundinamarca">Cundinamarca General</option>
+                </select>
+              </div>
+
+              <div class="col-md-4">
+                <label for="craftCategory" class="form-label small fw-semibold">Categoría</label>
+                <select class="form-select" id="craftCategory" required>
+                  <option value="Tejido y Textil">Tejido y Textil</option>
+                  <option value="Alfarería y Cerámica">Alfarería y Cerámica</option>
+                  <option value="Bisutería Ancestral">Bisutería Ancestral</option>
+                  <option value="Fique y Fibras">Fique y Fibras</option>
+                  <option value="Talla en Madera">Talla en Madera</option>
+                </select>
+              </div>
+
+              <div class="col-md-4">
+                <label for="craftStatus" class="form-label small fw-semibold">Estado Inicial</label>
+                <select class="form-select" id="craftStatus" required>
+                  <option value="En exhibición">En exhibición</option>
+                  <option value="En horneado">En horneado / confección</option>
+                  <option value="En almacén">En almacén</option>
+                </select>
+              </div>
+
+              <div class="col-md-4">
+                <label for="craftPrice" class="form-label small fw-semibold">Precio Estimado (COP)</label>
+                <div class="input-group">
+                  <span class="input-group-text">$</span>
+                  <input type="number" class="form-control" id="craftPrice" placeholder="50000" min="1000" required>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label for="craftDesc" class="form-label small fw-semibold">Descripción y Técnicas Ancestrales</label>
+                <textarea class="form-control" id="craftDesc" rows="3" placeholder="Detalles de materiales naturales, tiempo de elaboración, significado cultural..." required></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer border-0 pt-0 pb-3 px-4">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success px-4">
+              <i class="bi bi-check-circle me-1"></i> Guardar en Catálogo
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 2: DESCARGAR REPORTE DE TALLER                           -->
+  <!-- ============================================================== -->
+  <div class="modal fade" id="modalReporteTaller" tabindex="-1" aria-labelledby="modalReporteTallerLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content shadow border-0 rounded-4">
+        <div class="modal-header border-0 pb-0">
+          <div class="d-flex align-items-center gap-2">
+            <div class="auth-icon-badge" style="width: 42px; height: 42px; font-size: 20px; background-color: #eaf6ff; color: #0d6efd;">
+              <i class="bi bi-file-earmark-text-fill"></i>
+            </div>
+            <div>
+              <h5 class="modal-title fw-bold mb-0" id="modalReporteTallerLabel">Reporte General de Taller &amp; Producción</h5>
+              <small class="text-muted">Generación de informe oficial para artesanos y administración</small>
+            </div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="modal-body px-4 py-3" id="printSection">
+          <div class="p-3 bg-light rounded-3 border mb-3">
+            <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
+              <div>
+                <strong class="text-success">Artesanías de Nuestra Tierra</strong><br>
+                <small class="text-muted">Cobertura Territorial: Boyacá &amp; Cundinamarca</small>
+              </div>
+              <div class="text-end small">
+                <span class="badge bg-success">Oficial</span><br>
+                <span class="text-muted" id="reportDate">Fecha: Hoy</span>
+              </div>
+            </div>
+
+            <!-- Resumen de Métricas en Reporte -->
+            <div class="row g-2 text-center small my-2">
+              <div class="col-3">
+                <div class="p-2 bg-white rounded border">
+                  <div class="text-muted">Piezas Registradas</div>
+                  <strong class="fs-5 text-dark" id="repTotalPiezas">4</strong>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="p-2 bg-white rounded border">
+                  <div class="text-muted">En Exhibición</div>
+                  <strong class="fs-5 text-success" id="repExhibicion">2</strong>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="p-2 bg-white rounded border">
+                  <div class="text-muted">En Proceso</div>
+                  <strong class="fs-5 text-warning" id="repProceso">1</strong>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="p-2 bg-white rounded border">
+                  <div class="text-muted">En Almacén</div>
+                  <strong class="fs-5 text-info" id="repAlmacen">1</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Previsualización de Datos del Reporte -->
+          <h6 class="fw-bold mb-2 small text-muted text-uppercase">Desglose de Producción Activa</h6>
+          <div class="table-responsive border rounded-3 mb-3">
+            <table class="table table-sm table-striped align-middle mb-0 small">
+              <thead class="table-light">
+                <tr>
+                  <th>Pieza</th>
+                  <th>Región</th>
+                  <th>Categoría</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody id="reportTableBody">
+                <!-- Se llena con JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="modal-footer border-0 pt-0 pb-3 px-4 justify-content-between">
+          <small class="text-muted"><i class="bi bi-shield-check text-success"></i> Documento respaldado por el sistema</small>
+          <div class="d-flex gap-2">
+            <button type="button" class="btn btn-outline-secondary" onclick="window.print()">
+              <i class="bi bi-printer me-1"></i> Imprimir (PDF)
+            </button>
+            <button type="button" class="btn btn-success" id="descargarCsvBtn">
+              <i class="bi bi-filetype-csv me-1"></i> Descargar CSV
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 3: DETALLES Y GESTIÓN DE PIEZA INDIVIDUAL                -->
+  <!-- ============================================================== -->
+  <div class="modal fade" id="modalDetallesPieza" tabindex="-1" aria-labelledby="modalDetallesPiezaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content shadow border-0 rounded-4">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold" id="modalDetallesPiezaLabel">Detalle de la Pieza</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="modal-body px-4 py-3">
+          <h4 id="detPiezaNombre" class="fw-bold text-success mb-1">Nombre de la Pieza</h4>
+          <div class="d-flex gap-2 align-items-center mb-3">
+            <span class="badge bg-light text-dark border" id="detPiezaOrigen">Boyacá</span>
+            <span class="badge bg-success" id="detPiezaEstadoBadge">En exhibición</span>
+          </div>
+
+          <!-- Barra de Proceso de Fabricación -->
+          <div class="mb-3">
+            <label class="form-label small fw-semibold d-flex justify-content-between">
+              <span>Etapa de Elaboración Artesanal</span>
+              <span id="detProgresoTexto" class="text-success fw-bold">100%</span>
+            </label>
+            <div class="progress craft-progress-bar">
+              <div id="detProgressBar" class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+
+          <div class="p-3 bg-light rounded-3 mb-3 small">
+            <p id="detPiezaDesc" class="mb-2 text-secondary">Descripción de la artesanía...</p>
+            <div class="border-top pt-2">
+              <strong>Categoría:</strong> <span id="detPiezaCategoria">Tejido</span><br>
+              <strong>Precio Referencial:</strong> <span id="detPiezaPrecio" class="fw-bold text-success"> COP</span>
+            </div>
+          </div>
+
+          <!-- Actualización Rápida de Estado -->
+          <div class="mb-3">
+            <label for="cambiarEstadoSelect" class="form-label small fw-semibold">Cambiar Estado de Producción:</label>
+            <div class="input-group">
+              <select class="form-select form-select-sm" id="cambiarEstadoSelect">
+                <option value="En exhibición">En exhibición (Vitrina)</option>
+                <option value="En horneado">En horneado / confección</option>
+                <option value="En almacén">En almacén (Reserva)</option>
+              </select>
+              <button class="btn btn-sm btn-success" type="button" id="guardarNuevoEstadoBtn">
+                <i class="bi bi-arrow-repeat me-1"></i> Actualizar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer border-0 pt-0 pb-3 px-4">
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+  <!-- Panel JS File -->
+  <script src="assets/js/panel.js"></script>
+</body>
+
+</html>
